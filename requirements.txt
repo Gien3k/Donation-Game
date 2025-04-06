@@ -1,0 +1,13 @@
+streamlit
+pandas 
+altair 
+streamlit_autorefresh 
+numpy 
+numba
+tqdm
+celery
+redis  
+pydantic  
+streamlit-authenticator==0.3.2
+PyYAML
+bcrypt

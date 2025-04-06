@@ -1,0 +1,32 @@
+# Ignorowanie środowiska wirtualnego Python
+venv/
+/venv/
+
+# Ignorowanie cache Pythona
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignorowanie plików konfiguracyjnych specyficznych dla środowiska lub zawierających wrażliwe dane
+# Zamiast commitować config.yaml, stwórz config.example.yaml z przykładem struktury i dodaj go do repozytorium.
+config.yaml
+# config.toml # Odkomentuj tę linię (usuń '#'), jeśli plik config.toml również ma być ignorowany
+
+# Ignorowanie danych generowanych przez aplikację, historii, wyników itp.
+history/
+presets/ # Ignoruj, chyba że chcesz wersjonować domyślne/przykładowe presety
+results.csv # Plik z wynikami symulacji (jeśli taki jest generowany)
+saved_simulations.json # Plik ze stanem/historią symulacji
+
+# Ignorowanie plików logów
+*.log
+
+# Ignorowanie plików specyficznych dla systemu operacyjnego
+.DS_Store
+Thumbs.db
+
+# Ignorowanie plików konfiguracyjnych popularnych IDE (opcjonalnie)
+.idea/
+.vscode/
+

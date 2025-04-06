@@ -1,0 +1,41 @@
+# Usunieto linie 'version', ktora jest przestarzala w nowszych wersjach Docker Compose
+services:
+  # Aplikacja webowa (Streamlit)
+  web:
+    build: .
+    container_name: my_app_container
+    ports:
+      - "8501:8501"  # Mapowanie portu Streamlit
+    volumes:
+      - ./history:/app/history  # Mapowanie katalogu historii
+      - .:/app                 # Mapowanie całego katalogu aplikacji (dla dostępu do app.py, test_auth.py, config.yaml etc.)
+    depends_on:
+      - redis  # Uruchomienie po Redis
+    command: streamlit run app.py --server.address=0.0.0.0 --server.port=8501
+
+  # Worker Celery
+  celery_worker:
+    build: .
+    container_name: my_app_celery_worker
+    command: celery -A tasks.celery_app worker --loglevel=info
+    volumes:
+      - ./history:/app/history # Mapowanie katalogu historii
+      - .:/app                 # Mapowanie całego katalogu aplikacji (dla dostępu do tasks.py, 8.py etc.)
+    depends_on:
+      - redis
+
+  # Redis
+  redis:
+    image: redis:6 # Używa obrazu Redis w wersji 6.x
+    container_name: my_redis
+    ports:
+      - "6379:6379" # Mapowanie portu Redis
+    volumes:
+      - redis_data:/data # Nazwany wolumin do przechowywania danych Redis
+    # Usunięto komendę --save, aby potencjalnie zmniejszyć zapisy na dysk podczas developmentu (dane mogą nie przetrwać restartu kontenera redis)
+    # Jeśli potrzebujesz trwałości danych Redis, przywróć poprzednią komendę:
+    command: ["redis-server", "--save", "60", "1", "--dir", "/data", "--dbfilename", "dump.rdb"]
+
+# Definicja nazwanego woluminu dla danych Redis
+volumes:
+  redis_data:
